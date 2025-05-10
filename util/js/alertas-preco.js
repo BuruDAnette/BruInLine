@@ -15,8 +15,8 @@ async function loadAlertas() {
     return;
   }
 
-  let info = vetor.find((info) => info.id == usuario.id);
-  
+  let info = vetor.find(info => info.id == usuario.id);
+
   if (!info || !info.alertas || info.alertas.length === 0) {
     tbody.append("<tr><td colspan='3' class='text-center'>Você não possui alertas registrados</td></tr>");
     return;
@@ -29,17 +29,22 @@ async function loadAlertas() {
 
 async function adicionarLinha(alerta) {
   try {
-    let resp = await fetch("https://api-odinline.odiloncorrea.com/produto/" + alerta.idItem);
+    let resp = await fetch(`https://api-odinline.odiloncorrea.com/produto/${alerta.idItem}`);
     let produto = await resp.json();
-    
+
+    // Extrai o valor numérico removendo "R$" e convertendo para float
+    let valorLimiteStr = alerta.valorLimite.replace("R$", "").trim();
+    let precoDesejado = parseFloat(valorLimiteStr);
+    let precoAtual = parseFloat(produto.valor);
+
     let linha = `
       <tr>
-        <td>${produto.descricao}</td>
-        <td>${alerta.valorLimite}</td>
-        <td>R$${produto.valor}</td>
+        <td>${produto.descricao || "---"}</td>
+        <td>${isNaN(precoDesejado) ? '---' : `R$${precoDesejado.toFixed(2)}`}</td>
+        <td>${isNaN(precoAtual) ? '---' : `R$${precoAtual.toFixed(2)}`}</td>
       </tr>
     `;
-    
+
     $("#tabelaAlertas tbody").append(linha);
   } catch (error) {
     console.error("Erro ao carregar produto:", error);
@@ -49,4 +54,8 @@ async function adicionarLinha(alerta) {
 function logout() {
   localStorage.removeItem("contaLogada");
   window.location.href = "../index.html";
+}
+
+function voltarPagina() {
+    history.back();
 }

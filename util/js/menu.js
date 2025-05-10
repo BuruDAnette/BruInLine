@@ -16,3 +16,6 @@ function logout() {
     localStorage.removeItem("contaLogada");
     window.location.href = "index.html";
 }
+function voltarPagina() {
+    history.back();
+}

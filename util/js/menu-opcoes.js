@@ -163,4 +163,6 @@ function registrarAlerta() {
   window.location.reload();
 }
 
-
+function voltarPagina() {
+    history.back();
+}

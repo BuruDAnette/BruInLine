@@ -1,11 +1,12 @@
 var usuario = JSON.parse(localStorage.getItem("contaLogada"));
+
 $(document).ready(function () {
   $("#nomeLogin").text(usuario.nome);
   loadCompras();
 });
-$(document).ready(function() {
+
+$(document).ready(function () {
   if (!verificaLogin()) return;
-  
   iniciarMonitoramento();
 });
 
@@ -27,18 +28,25 @@ async function verificaAlertas() {
   try {
     const vetor = JSON.parse(localStorage.getItem("vetor")) || [];
     const info = vetor.find(info => info.id === usuario.id);
-    
+
     if (!info?.alertas?.length) return;
+
+    let alertasRemovidos = false;
 
     for (let i = info.alertas.length - 1; i >= 0; i--) {
       const alerta = info.alertas[i];
       const produto = await buscarProduto(alerta.idItem);
-      
+
       if (produto && produto.valor <= parseValor(alerta.valorLimite)) {
         mostrarNotificacao(produto, alerta.valorLimite);
-        info.alertas.splice(i, 1); 
-        localStorage.setItem("vetor", JSON.stringify(vetor));
+        info.alertas.splice(i, 1);
+        alertasRemovidos = true;
       }
+    }
+
+    if (alertasRemovidos) {
+      localStorage.setItem("vetor", JSON.stringify(vetor));
+      loadAlertas();
     }
   } catch (error) {
     console.error("Erro ao verificar alertas:", error);
@@ -57,7 +65,7 @@ async function buscarProduto(id) {
 }
 
 function parseValor(valorStr) {
-  return parseFloat(valorStr.replace("R$", "").replace(",", ".").trim());
+  return parseFloat(valorStr.toString().replace("R$", "").replace(",", ".").trim());
 }
 
 function mostrarNotificacao(produto, valorLimite) {
@@ -71,14 +79,14 @@ function mostrarNotificacao(produto, valorLimite) {
         <div class="toast-body">
           <p>O produto <strong>${produto.descricao}</strong> atingiu seu preço alvo!</p>
           <div class="d-flex justify-content-between">
-            <span>Preço atual: <strong>R$${produto.valor}</strong></span>
-            <span>Limite: <strong>${valorLimite}</strong></span>
+            <span>Preço atual: <strong>R$${parseFloat(produto.valor).toFixed(2)}</strong></span>
+            <span>Limite: <strong>R$${parseFloat(valorLimite).toFixed(2)}</strong></span>
           </div>
         </div>
       </div>
     </div>
   `;
-  
+
   const toastElement = $(toastHtml).appendTo('body');
   setTimeout(() => toastElement.remove(), 5000);
 }
@@ -86,3 +94,7 @@ function mostrarNotificacao(produto, valorLimite) {
 function verComprass() {
   window.location.href = "menu-opcoes.html";
 }
+function verAlertas() {
+  window.location.href = "alertas-preco.html";
+}
+
