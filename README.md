@@ -2,6 +2,7 @@
 
 ## Visão Geral
 Sistema web para monitoramento de preços de produtos e gestão de compras pessoais, integrado com a plataforma OdinLine.
+Disponível em: https://bruinline.netlify.app/
 
 ## Funcionalidades
 
