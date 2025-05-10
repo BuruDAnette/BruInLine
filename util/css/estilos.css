@@ -1,0 +1,108 @@
+/* Variáveis de cores roxas */
+:root {
+    --roxo-principal: #6a0dad;
+    --roxo-escuro: #4a148c;
+    --roxo-claro: #9c27b0;
+    --roxo-texto: #f3e5f5;
+    --roxo-bg: #f8f5fd;
+}
+
+/* Sobrescreve as cores do Bootstrap */
+.bg-primary, .btn-primary, .card-header.bg-primary {
+    background-color: var(--roxo-principal) !important;
+    border-color: var(--roxo-escuro) !important;
+    color: white !important;
+}
+.alert-primary {
+    background-color: var(--roxo-texto) !important;
+    border-color: var(--roxo-texto) !important;
+    color: var(--roxo-escuro) !important;
+}
+
+.btn-alert {
+    background-color: var(--roxo-texto) !important;
+    border-color: var(--roxo-texto) !important;
+    color: var(--roxo-escuro) !important;
+}
+.btn-alert:hover, .btn-alert:focus {
+    background-color: var(--roxo-claro) !important;
+    color:white !important;
+    border-color: var(--roxo-claro) !important;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--roxo-escuro) !important;
+}
+
+.border-primary {
+    border-color: var(--roxo-principal) !important;
+}
+
+.text-primary {
+    color: var(--roxo-principal) !important;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--roxo-principal) !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.3rem;
+    transition: all 0.2s;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.03);
+}
+
+.nav-link {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    margin: 0 2px;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-info {
+    background-color: var(--roxo-claro) !important;
+    border-color: var(--roxo-principal) !important;
+    color: white !important;
+}
+
+.btn-info:hover {
+    background-color: var(--roxo-principal) !important;
+}
+
+body {
+    background-color: var(--roxo-bg);
+}
+
+footer {
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}
